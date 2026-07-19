@@ -1,0 +1,14 @@
+node_modules/
+.env
+uploads/
+output/
+data/
+*.mp3
+
+# Secrets — never commit. Inject via `fly secrets` / env at runtime.
+cookies.txt
+*.cookies
+.env.*
+
+# macOS
+.DS_Store

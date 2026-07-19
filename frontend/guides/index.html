@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guides — How to Make Wedding &amp; Mehndi Song Medleys | Mehndley</title>
+  <meta name="description" content="Step-by-step guides for making Desi wedding, mehndi and baraat song medleys online for free — trimming, crossfades, relay hooks and export tips." />
+  <link rel="canonical" href="https://mehndley.fly.dev/guides/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta property="og:title" content="Mehndley Guides — Make Wedding &amp; Mehndi Medleys" />
+  <meta property="og:description" content="Free step-by-step guides to building the perfect Desi wedding medley in your browser." />
+  <meta property="og:url" content="https://mehndley.fly.dev/guides" />
+  <meta property="og:image" content="https://mehndley.fly.dev/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('mm-theme')||'dark')}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="landing">
+
+<header class="lp-nav">
+  <div class="lp-nav-side lp-nav-left">
+    <button class="btn-theme" id="themeToggle" title="Toggle theme">🌙</button>
+  </div>
+  <a href="/" class="lp-wordmark">🥁 Mehndley</a>
+  <div class="lp-nav-side lp-nav-right">
+    <a href="/app" class="lp-launch">Launch App →</a>
+  </div>
+</header>
+
+<section class="lp-section">
+  <div class="lp-section-head">
+    <span class="lp-eyebrow">Guides</span>
+    <h2>Make the perfect wedding medley</h2>
+    <p>Practical, no-fluff guides to building Desi wedding, mehndi and baraat medleys — free, right in your browser.</p>
+  </div>
+
+  <div class="guides-grid">
+    <a class="guide-card" href="/guides/how-to-make-a-wedding-medley">
+      <h3>How to Make a Wedding Song Medley (Free, in Your Browser)</h3>
+      <p>A complete step-by-step walkthrough: search songs, trim the best parts, blend with crossfades or a dhol relay, and export one seamless MP3.</p>
+      <span class="guide-read">Read the guide →</span>
+    </a>
+    <a class="guide-card" href="/guides/mehndi-song-medley">
+      <h3>How to Make a Mehndi Song Medley for Your Big Night</h3>
+      <p>Song ideas, the ideal slow-to-upbeat structure, and how to add a signature dhol hook — everything for a mehndi entrance that lands.</p>
+      <span class="guide-read">Read the guide →</span>
+    </a>
+  </div>
+</section>
+
+<footer class="lp-footer">
+  <div class="lp-footer-brand">🥁 Mehnd<span class="brand-accent">ley</span></div>
+  <nav class="lp-footer-links">
+    <a href="/">Home</a>
+    <a href="/guides">Guides</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/app">Launch App</a>
+  </nav>
+  <div class="lp-footer-disclaimer">
+    For personal, non-commercial use only. All songs belong to their respective artists and rights holders.
+  </div>
+</footer>
+
+<script>
+  const t = document.getElementById('themeToggle');
+  const cur = document.documentElement.getAttribute('data-theme');
+  t.textContent = cur === 'dark' ? '🌙' : '☀️';
+  t.onclick = () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    t.textContent = next === 'dark' ? '🌙' : '☀️';
+    try { localStorage.setItem('mm-theme', next); } catch (e) {}
+  };
+</script>
+</body>
+</html>

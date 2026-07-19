@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mehndley — Desi Wedding Medley Maker</title>
+  <meta name="description" content="Mehndley turns your favourite Bollywood, Punjabi and Desi songs into one seamless wedding medley. Search, trim, blend, and export — right in your browser." />
+
+  <!-- Icons + PWA -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="canonical" href="https://mehndley.fly.dev/" />
+
+  <!-- Google Search Console verification -->
+  <meta name="google-site-verification" content="p2dj_wQEFlKj6KB0KSOlhzqObLdoXT1eSVvKnOf27is" />
+
+  <!-- Social preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mehndley" />
+  <meta property="og:title" content="Mehndley — Desi Wedding Medley Maker" />
+  <meta property="og:description" content="One medley. Every song of the night. Search Desi songs, trim, blend, and export a seamless mashup for your mehndi, baraat or reception." />
+  <meta property="og:url" content="https://mehndley.fly.dev/" />
+  <meta property="og:image" content="https://mehndley.fly.dev/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mehndley — Desi Wedding Medley Maker" />
+  <meta name="twitter:description" content="One medley. Every song of the night. Build a seamless Desi wedding mashup in your browser." />
+  <meta name="twitter:image" content="https://mehndley.fly.dev/og.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Structured data: helps Google understand the app + show rich FAQ results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Mehndley",
+    "url": "https://mehndley.fly.dev/",
+    "description": "Search Bollywood, Punjabi and Desi songs, trim the parts you love, blend them with crossfades or a relay hook, and export one seamless wedding medley.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any (web browser)",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Is Mehndley free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Search, trimming, mixing and export are all free. Just open the app and start building your medley." } },
+      { "@type": "Question", "name": "What kinds of songs can I add?", "acceptedAnswer": { "@type": "Answer", "text": "Anything you can find in the search — Bollywood, Punjabi, Desi pop and more. Use the quick tags or type any song or artist." } },
+      { "@type": "Question", "name": "What's the difference between crossfade and relay mode?", "acceptedAnswer": { "@type": "Answer", "text": "Crossfade smoothly blends one song into the next. Relay mode plays a short signature hook between every pair of songs, with optional silence gaps." } },
+      { "@type": "Question", "name": "Can I save my work and come back later?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — save any medley as a project, then reload, preview or re-export it whenever you like." } },
+      { "@type": "Question", "name": "What format is the final file?", "acceptedAnswer": { "@type": "Answer", "text": "A single high-quality 320 kbps MP3 that plays on any phone, laptop, DJ setup or speaker." } },
+      { "@type": "Question", "name": "Does it work on my phone?", "acceptedAnswer": { "@type": "Answer", "text": "Mehndley runs in any modern browser. For heavy trimming and editing, a laptop or desktop gives you the most room to work." } }
+    ]
+  }
+  </script>
+
+  <!-- ▼▼ ANALYTICS: paste your Cloudflare Web Analytics / GA snippet here ▼▼ -->
+</head>
+<body class="landing">
+
+<!-- ══ NAV ══ -->
+<header class="lp-nav">
+  <div class="lp-nav-side lp-nav-left">
+    <button class="btn-theme" id="themeToggle" title="Toggle theme">🌙</button>
+  </div>
+  <a href="/" class="lp-wordmark">🥁 Mehnd<span class="brand-accent">ley</span></a>
+  <div class="lp-nav-side lp-nav-right">
+    <a href="/app" class="lp-launch">Launch App →</a>
+  </div>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="lp-hero">
+  <div class="lp-tag">✦ Desi Wedding Medley Maker</div>
+  <h1>One medley.<br />Every song of the night.</h1>
+  <p class="lp-sub">
+    Search Bollywood, Punjabi &amp; Desi tracks, trim the exact parts you love,
+    blend them with smooth crossfades or a signature relay hook, and export a
+    single seamless mashup for your mehndi, baraat or reception.
+  </p>
+  <div class="lp-cta-row">
+    <a href="/app" class="lp-btn-primary">Start Mixing →</a>
+    <a href="#how" class="lp-btn-ghost">See how it works</a>
+  </div>
+  <div class="lp-hero-strip" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</section>
+
+<!-- ══ WHAT ══ -->
+<section class="lp-section">
+  <div class="lp-section-head">
+    <span class="lp-eyebrow">What is Mehndley</span>
+    <h2>A studio for wedding medleys — no studio required.</h2>
+    <p>Building the perfect entrance mashup usually means an editor, a producer, and a lot of back-and-forth. Mehndley puts the whole workflow in your browser: find the songs, cut them to the beat, and stitch them into one continuous track that plays exactly how you imagined.</p>
+  </div>
+  <div class="lp-feature-grid">
+    <div class="lp-feature">
+      <div class="lp-feature-icon">🔍</div>
+      <h3>Instant search</h3>
+      <p>Powered by the iTunes catalogue — real album art and previews in a fraction of a second.</p>
+    </div>
+    <div class="lp-feature">
+      <div class="lp-feature-icon">✂️</div>
+      <h3>Precise trimming</h3>
+      <p>Waveform editor with drag handles and mark-in / mark-out so you keep only the best moments.</p>
+    </div>
+    <div class="lp-feature">
+      <div class="lp-feature-icon">🌊</div>
+      <h3>Smart transitions</h3>
+      <p>Blend clips with crossfades, or drop a relay hook between every song for that signature flow.</p>
+    </div>
+    <div class="lp-feature">
+      <div class="lp-feature-icon">⬇️</div>
+      <h3>One-click export</h3>
+      <p>Render a single high-quality MP3 you can play from any phone, DJ deck or speaker.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW ══ -->
+<section class="lp-section lp-how" id="how">
+  <div class="lp-section-head">
+    <span class="lp-eyebrow">How it works</span>
+    <h2>From playlist to medley in four steps.</h2>
+  </div>
+  <div class="lp-steps">
+    <div class="lp-step">
+      <div class="lp-step-num">1</div>
+      <h3>Search &amp; add</h3>
+      <p>Find your songs and add them to the timeline. Mehndley grabs the audio for you.</p>
+    </div>
+    <div class="lp-step">
+      <div class="lp-step-num">2</div>
+      <h3>Trim each track</h3>
+      <p>Play the waveform, then mark the in and out points to keep just the parts you want.</p>
+    </div>
+    <div class="lp-step">
+      <div class="lp-step-num">3</div>
+      <h3>Choose transitions</h3>
+      <p>Pick crossfade or relay mode, set fades, and preview the full medley instantly.</p>
+    </div>
+    <div class="lp-step">
+      <div class="lp-step-num">4</div>
+      <h3>Export &amp; play</h3>
+      <p>Render your mashup to a single MP3 and download it — ready for the big night.</p>
+    </div>
+  </div>
+  <div class="lp-center"><a href="/app" class="lp-btn-primary">Open the mixer →</a></div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="lp-section" id="faq">
+  <div class="lp-section-head">
+    <span class="lp-eyebrow">FAQ</span>
+    <h2>Questions, answered.</h2>
+  </div>
+  <div class="lp-faq">
+    <details class="lp-faq-item">
+      <summary>Is Mehndley free to use?</summary>
+      <p>Yes. Search, trimming, mixing and export are all free. Just open the app and start building your medley.</p>
+    </details>
+    <details class="lp-faq-item">
+      <summary>What kinds of songs can I add?</summary>
+      <p>Anything you can find in the search — Bollywood, Punjabi, Desi pop and more. Use the quick tags or type any song or artist.</p>
+    </details>
+    <details class="lp-faq-item">
+      <summary>What's the difference between crossfade and relay mode?</summary>
+      <p>Crossfade smoothly blends one song into the next. Relay mode plays a short signature hook (like a dhol pattern) between every pair of songs, with optional silence gaps for dramatic pauses.</p>
+    </details>
+    <details class="lp-faq-item">
+      <summary>Can I save my work and come back later?</summary>
+      <p>Yes — save any medley as a project, then reload, preview or re-export it whenever you like.</p>
+    </details>
+    <details class="lp-faq-item">
+      <summary>What format is the final file?</summary>
+      <p>A single high-quality 320 kbps MP3 that plays on any phone, laptop, DJ setup or speaker.</p>
+    </details>
+    <details class="lp-faq-item">
+      <summary>Does it work on my phone?</summary>
+      <p>Mehndley runs in any modern browser. For heavy trimming and editing, a laptop or desktop gives you the most room to work.</p>
+    </details>
+    <details class="lp-faq-item">
+      <summary>Can I use the medleys I make?</summary>
+      <p>Mehndley is a personal tool for creating medleys for your own private events — your mehndi, baraat or reception. The songs remain the property of their respective artists and rights holders. Please don't use exported medleys for commercial purposes or public redistribution, and support the original artists.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="lp-section lp-contact" id="contact">
+  <div class="lp-section-head">
+    <span class="lp-eyebrow">Contact us</span>
+    <h2>Got a question or an idea?</h2>
+    <p>We'd love to hear from you — feature requests, feedback, or just to say your medley slapped.</p>
+    <a href="mailto:s.nadishah@gmail.com" class="lp-btn-primary">s.nadishah@gmail.com</a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="lp-footer">
+  <div class="lp-footer-brand">🥁 Mehnd<span class="brand-accent">ley</span></div>
+  <nav class="lp-footer-links">
+    <a href="#how">How it works</a>
+    <a href="/guides">Guides</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+    <a href="/app">Launch App</a>
+  </nav>
+  <div class="lp-footer-copy">© <span id="lp-year"></span> Mehndley · Made for the culture 💛</div>
+  <div class="lp-footer-disclaimer">
+    For personal, non-commercial use only. All songs belong to their respective artists and rights holders.
+    Mehndley doesn't host any music — please support the original creators.
+  </div>
+</footer>
+
+<script>
+  // Theme (shared with the app via localStorage)
+  const themeBtn = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('mm-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  themeBtn.textContent = saved === 'dark' ? '🌙' : '☀️';
+  themeBtn.onclick = () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    themeBtn.textContent = next === 'dark' ? '🌙' : '☀️';
+    localStorage.setItem('mm-theme', next);
+  };
+  document.getElementById('lp-year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

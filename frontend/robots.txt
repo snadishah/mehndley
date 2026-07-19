@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /output/
+
+Sitemap: https://mehndley.fly.dev/sitemap.xml

@@ -1,0 +1,32 @@
+# fly.toml app configuration file generated for mehndley on 2026-07-13T19:14:20+05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'mehndley'
+primary_region = 'sin'
+
+[build]
+  dockerfile = 'Dockerfile'
+
+[env]
+  FILE_TTL_HOURS = '72'
+  MM_STORAGE = '/data'
+  PORT = '3000'
+
+[[mounts]]
+  source = 'mehndley_data'
+  destination = '/data'
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '1gb'
+  cpus = 1
+  memory_mb = 1024

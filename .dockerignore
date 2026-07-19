@@ -1,0 +1,13 @@
+node_modules
+npm-debug.log
+uploads
+output
+data
+.env
+.env.*
+cookies.txt
+*.cookies
+.git
+.gitignore
+.DS_Store
+railway.toml
