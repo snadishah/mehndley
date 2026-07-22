@@ -51,12 +51,46 @@ async function probeDuration(file) {
   } catch (_) { return 0; }
 }
 
+// Only allow fetching preview clips from Apple's CDN (defeats SSRF via previewUrl).
+function isApplePreview(url) {
+  try {
+    const u = new URL(url);
+    return u.protocol === 'https:' &&
+      (u.hostname.endsWith('.apple.com') || u.hostname.endsWith('.mzstatic.com'));
+  } catch (_) { return false; }
+}
+
+// Fallback source: download the iTunes 30s preview (m4a) and transcode to mp3.
+// Used when YouTube blocks the datacenter IP ("confirm you're not a bot").
+async function downloadPreview(previewUrl, safeName) {
+  if (!isApplePreview(previewUrl)) throw new Error('invalid preview url');
+  const filename = `${safeName}_${Date.now()}.mp3`;
+  const outPath = path.join(UPLOADS_DIR, filename);
+  await execFileAsync('ffmpeg', ['-y', '-i', previewUrl, '-acodec', 'libmp3lame', '-ab', '256k', outPath],
+    { timeout: 30000 });
+  return { filename, outPath };
+}
+
 class AudioController {
   // ── Download a full track from YouTube via yt-dlp ──────────────
   async downloadFromYouTube(req, res) {
-    const { query, trackName, artistName, youtubeId } = req.body;
+    const { query, trackName, artistName, youtubeId, previewUrl } = req.body;
     const safeName = (trackName || query || 'track')
       .replace(/[^a-z0-9\s-]/gi, '').replace(/\s+/g, '_').substring(0, 50) || 'track';
+
+    // Fast, reliable primary path: the iTunes preview clip. YouTube bot-blocks
+    // datacenter IPs, so this is what actually works in production (and 30s is
+    // plenty for a trimmed medley clip). yt-dlp remains a fallback for the rare
+    // track with no preview.
+    if (previewUrl && isApplePreview(previewUrl)) {
+      try {
+        const { filename } = await downloadPreview(previewUrl, safeName);
+        return res.json({ success: true, filename, url: `/uploads/${filename}`, thumbnailUrl: null, videoId: null, source: 'preview' });
+      } catch (e) {
+        console.log('[download] preview failed, falling back to yt-dlp:', e.message);
+      }
+    }
+
     const outputTemplate = path.join(UPLOADS_DIR, `${safeName}_${Date.now()}.%(ext)s`);
 
     // Only accept a real 11-char YouTube id; otherwise fall back to a search.
@@ -108,13 +142,25 @@ class AudioController {
     ytdlp.stderr.on('data', d => { stderr += d.toString(); });
 
     ytdlp.on('close', () => {
-      done(() => {
+      done(async () => {
         if (!finalPath || !fs.existsSync(finalPath)) {
           const files = fs.readdirSync(UPLOADS_DIR)
             .filter(f => f.includes(safeName) && f.endsWith('.mp3'))
             .sort((a, b) => fs.statSync(path.join(UPLOADS_DIR, b)).mtime - fs.statSync(path.join(UPLOADS_DIR, a)).mtime);
-          if (files.length > 0) finalPath = path.join(UPLOADS_DIR, files[0]);
-          else return res.status(500).json({ error: 'Download failed: ' + (stderr.substring(0, 200) || 'no audio found') });
+          if (files.length > 0) {
+            finalPath = path.join(UPLOADS_DIR, files[0]);
+          } else if (previewUrl && isApplePreview(previewUrl)) {
+            // YouTube blocked us — fall back to the iTunes 30s preview.
+            try {
+              console.log('[yt-dlp] blocked; using iTunes preview fallback');
+              const { filename, outPath } = await downloadPreview(previewUrl, safeName);
+              return res.json({ success: true, filename, url: `/uploads/${filename}`, thumbnailUrl: null, videoId: null, source: 'preview' });
+            } catch (e) {
+              return res.status(500).json({ error: 'Download failed (and preview fallback failed): ' + e.message });
+            }
+          } else {
+            return res.status(500).json({ error: 'Download failed: ' + (stderr.substring(0, 200) || 'no audio found') });
+          }
         }
         const filename = path.basename(finalPath);
         const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : null;

@@ -155,7 +155,7 @@ async function addToTimeline(track, btn) {
   timeline.render();
 
   try {
-    const result = await API.downloadAudio(track.name, track.artist, track.youtubeId);
+    const result = await API.downloadAudio(track.name, track.artist, track.youtubeId, track.previewUrl);
     if (result.error) throw new Error(result.error);
     if (!result.filename) throw new Error('No filename in response');
 
@@ -507,7 +507,7 @@ async function selectRelayTrack(track) {
   document.getElementById('relay-waveform').innerHTML = '<div class="tl-loading"><div class="spinner"></div> Downloading…</div>';
 
   showToast('Downloading relay: "' + track.name + '"…');
-  const result = await API.downloadAudio(track.name, track.artist);
+  const result = await API.downloadAudio(track.name, track.artist, null, track.previewUrl);
   if (result.error) { showToast('Relay download failed', 'error'); return; }
 
   if (result.thumbnailUrl && artEl) artEl.src = result.thumbnailUrl;

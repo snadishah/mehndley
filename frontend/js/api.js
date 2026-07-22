@@ -24,11 +24,11 @@ const API = {
     const res = await fetch(`/api/spotify/features?ids=${ids.join(',')}`);
     return res.json();
   },
-  async downloadAudio(trackName, artistName, youtubeId) {
+  async downloadAudio(trackName, artistName, youtubeId, previewUrl) {
     const res = await fetch('/api/audio/download', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ trackName, artistName, youtubeId }),
+      body: JSON.stringify({ trackName, artistName, youtubeId, previewUrl }),
     });
     return res.json();
   },
