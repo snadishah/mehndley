@@ -6,7 +6,6 @@ const execFileAsync = promisify(execFile);
 
 const { UPLOADS_DIR, OUTPUT_DIR } = require('../config');
 const YTDLP = process.env.YTDLP_PATH || '/opt/homebrew/bin/yt-dlp';
-const COOKIES = process.env.YTDLP_COOKIES; // path to cookies file, injected as a secret in prod
 
 // ── Input helpers ──────────────────────────────────────────────
 // Clamp any client-supplied value to a finite number in [min,max].
@@ -77,21 +76,10 @@ class AudioController {
     const { query, trackName, artistName, youtubeId, previewUrl } = req.body;
     const safeName = (trackName || query || 'track')
       .replace(/[^a-z0-9\s-]/gi, '').replace(/\s+/g, '_').substring(0, 50) || 'track';
-
-    // Fast, reliable primary path: the iTunes preview clip. YouTube bot-blocks
-    // datacenter IPs, so this is what actually works in production (and 30s is
-    // plenty for a trimmed medley clip). yt-dlp remains a fallback for the rare
-    // track with no preview.
-    if (previewUrl && isApplePreview(previewUrl)) {
-      try {
-        const { filename } = await downloadPreview(previewUrl, safeName);
-        return res.json({ success: true, filename, url: `/uploads/${filename}`, thumbnailUrl: null, videoId: null, source: 'preview' });
-      } catch (e) {
-        console.log('[download] preview failed, falling back to yt-dlp:', e.message);
-      }
-    }
-
     const outputTemplate = path.join(UPLOADS_DIR, `${safeName}_${Date.now()}.%(ext)s`);
+
+    // Read cookies at call time (materialized from a Fly secret at startup).
+    const COOKIES = process.env.YTDLP_COOKIES;
 
     // Only accept a real 11-char YouTube id; otherwise fall back to a search.
     const validId = typeof youtubeId === 'string' && /^[a-zA-Z0-9_-]{11}$/.test(youtubeId);
@@ -104,11 +92,14 @@ class AudioController {
       '--extract-audio', '--audio-format', 'mp3', '--audio-quality', '0',
       '--output', outputTemplate,
       '--no-playlist', '--max-downloads', '1', '--no-warnings',
-      // The android/web clients are the most resilient to datacenter bot-blocking.
-      '--extractor-args', 'youtube:player_client=android,web',
       '--print', 'after_move:filepath', '--print', 'id',
     ];
-    if (COOKIES && fs.existsSync(COOKIES)) args.push('--cookies', COOKIES);
+    if (COOKIES && fs.existsSync(COOKIES)) {
+      // Browser-exported cookies belong to the web client.
+      args.push('--cookies', COOKIES, '--extractor-args', 'youtube:player_client=web,default');
+    } else {
+      args.push('--extractor-args', 'youtube:player_client=android,web');
+    }
 
     console.log(`[yt-dlp] Downloading: ${source}`);
     let ytdlp;

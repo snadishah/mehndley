@@ -11,6 +11,21 @@ const audioRoutes = require('./routes/audio');
 const projectRoutes = require('./routes/projects');
 const { UPLOADS_DIR, OUTPUT_DIR, DATA_DIR } = require('./config');
 
+// ── yt-dlp cookies ──
+// Materialize a browser-exported cookies.txt from a Fly secret (base64) so
+// full-song YouTube downloads work from the datacenter IP. Refresh by updating
+// the secret: fly secrets set YTDLP_COOKIES_B64="$(base64 -i cookies.txt)"
+(function loadYtDlpCookies() {
+  const b64 = process.env.YTDLP_COOKIES_B64;
+  if (!b64) return;
+  try {
+    const p = require('path').join(require('os').tmpdir(), 'yt-cookies.txt');
+    fs.writeFileSync(p, Buffer.from(b64, 'base64').toString('utf8'), { mode: 0o600 });
+    process.env.YTDLP_COOKIES = p;
+    console.log('[yt-dlp] cookies loaded from secret');
+  } catch (e) { console.error('[yt-dlp] cookie load failed:', e.message); }
+})();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
