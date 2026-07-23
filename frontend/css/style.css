@@ -1322,9 +1322,10 @@ body.landing { overflow-y: auto; overflow-x: hidden; height: auto; }
 }
 
 @media (max-width: 600px) {
-  .lp-nav { padding: 12px 16px; }
-  .lp-wordmark { font-size: 19px; }
-  .lp-launch { padding: 8px 14px; font-size: 13px; }
+  .lp-nav { padding: 10px 12px; gap: 8px; }
+  .lp-wordmark { font-size: 16px; letter-spacing: -.3px; }
+  .lp-launch { padding: 6px 12px; font-size: 12px; white-space: nowrap; }
+  .btn-theme { width: 32px; height: 32px; font-size: 14px; }
   .lp-hero { padding: 54px 20px 44px; }
   .lp-section { padding: 50px 20px; }
   /* Stacked, full-width CTAs = symmetric on phones */
@@ -1336,4 +1337,11 @@ body.landing { overflow-y: auto; overflow-x: hidden; height: auto; }
   .lp-footer-links { gap: 16px; }
   .lp-faq-item summary { padding: 16px 18px; font-size: 14.5px; }
   .lp-faq-item p { padding: 0 18px 18px; }
+}
+
+/* Very small phones — keep the top bar from crowding */
+@media (max-width: 380px) {
+  .lp-wordmark { font-size: 15px; }
+  .lp-launch { padding: 5px 10px; font-size: 11px; }
+  .btn-theme { width: 30px; height: 30px; }
 }
