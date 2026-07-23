@@ -24,6 +24,11 @@ themeBtn.onclick = () => {
   document.documentElement.setAttribute('data-theme', next);
   themeBtn.textContent = next === 'dark' ? '🌙' : '☀️';
   localStorage.setItem('mm-theme', next);
+  // Recolor every waveform so it stays visible in the new theme.
+  timeline.refreshColors();
+  const c = wfColors();
+  if (previewWS) { try { previewWS.setOptions(c); } catch (_) {} }
+  if (relayWS)   { try { relayWS.setOptions(c); } catch (_) {} }
 };
 
 // ── Navigation ──

@@ -69,6 +69,12 @@ class Timeline {
     });
   }
 
+  // Re-apply theme-appropriate colors to every waveform (called on theme toggle).
+  refreshColors() {
+    const c = wfColors();
+    Object.values(this.wavesurfers).forEach(ws => { try { ws.setOptions(c); } catch (_) {} });
+  }
+
   // ── Active track + playback control ──
   setActive(id) {
     this.activeId = id;
