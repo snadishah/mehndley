@@ -76,10 +76,24 @@ class AudioController {
     const { query, trackName, artistName, youtubeId, previewUrl } = req.body;
     const safeName = (trackName || query || 'track')
       .replace(/[^a-z0-9\s-]/gi, '').replace(/\s+/g, '_').substring(0, 50) || 'track';
-    const outputTemplate = path.join(UPLOADS_DIR, `${safeName}_${Date.now()}.%(ext)s`);
 
     // Read cookies at call time (materialized from a Fly secret at startup).
     const COOKIES = process.env.YTDLP_COOKIES;
+
+    // YouTube currently requires PO tokens for formats even with cookies, so full-song
+    // downloads don't work from the server. Use the reliable iTunes preview by default;
+    // set FULL_SONG_MODE=1 (when a proxy / PO-token provider is configured) to try YouTube first.
+    const fullSongMode = process.env.FULL_SONG_MODE === '1';
+    if (!fullSongMode && previewUrl && isApplePreview(previewUrl)) {
+      try {
+        const { filename } = await downloadPreview(previewUrl, safeName);
+        return res.json({ success: true, filename, url: `/uploads/${filename}`, thumbnailUrl: null, videoId: null, source: 'preview' });
+      } catch (e) {
+        console.log('[download] preview failed, trying yt-dlp:', e.message);
+      }
+    }
+
+    const outputTemplate = path.join(UPLOADS_DIR, `${safeName}_${Date.now()}.%(ext)s`);
 
     // Only accept a real 11-char YouTube id; otherwise fall back to a search.
     const validId = typeof youtubeId === 'string' && /^[a-zA-Z0-9_-]{11}$/.test(youtubeId);
