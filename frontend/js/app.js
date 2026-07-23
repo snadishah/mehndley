@@ -332,8 +332,10 @@ async function openPreview(segs) {
     document.getElementById('preview-status').textContent =
       result.duration ? fmtTime(result.duration) + ' medley' : 'Medley ready';
 
-    // Clear spinner
+    // Clear spinner + reset container to a plain full-width box
     waveEl.innerHTML = '';
+    waveEl.style.width = '100%';
+    waveEl.style.minHeight = '80px';
 
     // Destroy old instance
     if (previewWS) {
@@ -341,19 +343,11 @@ async function openPreview(segs) {
       previewWS = null;
     }
 
-    // Force the container to a known pixel width before WaveSurfer measures it
-      waveEl.style.width = '100%';
-      waveEl.style.minHeight = '80px';
+    // Wait two animation frames so the modal is fully laid out and the container
+    // has a real (non-zero) width before WaveSurfer measures it.
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-      // Wait for paint
-      await new Promise(r => setTimeout(r, 300));
-
-      // Explicitly set pixel width so WaveSurfer doesn't measure 0
-      const containerWidth = waveEl.getBoundingClientRect().width;
-      if (containerWidth > 0) waveEl.style.width = containerWidth + 'px';
-
-      // Create WaveSurfer
-      previewWS = WaveSurfer.create({
+    previewWS = WaveSurfer.create({
       container:     waveEl,
       ...wfColors(),
       cursorWidth:   2,
